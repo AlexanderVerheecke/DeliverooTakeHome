@@ -38,4 +38,9 @@ public class CronTest {
     void expandInteger(){
         Cron cron = Cron.fromString("1 0 1 3 4 /usr/bin/find"); // -
     }
+
+    @Test
+    void parseValidCron() {
+        Cron cron = Cron.fromString("*/15 0 1,15 * 1-5 /usr/bin/find");
+    }
 }

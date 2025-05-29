@@ -54,7 +54,7 @@ public class CronPart {
     private void parseStars(String cronPart, CronPartType type){
         StringBuilder stringBuilder = new StringBuilder();
         if (cronPart.startsWith("*")){
-            if (cronPart.length() ==1){
+            if (cronPart.length() == 1){
                 buildRange(type.getMin(), type.getMax(), stringBuilder);
                 System.out.println(type.toString()+ " : "+stringBuilder);
 
@@ -65,7 +65,9 @@ public class CronPart {
             int indexStar = cronPart.indexOf("*");
 
             if (String.valueOf(cronPart.charAt(indexStar + 1)).equals("/")){
-                String substring = cronPart.substring(indexStar+2);
+                buildInterval(cronPart, indexStar, stringBuilder);
+                System.out.println(type.toString()+ " : "+stringBuilder);
+//                String substring = cronPart.substring(indexStar+2);
                 // using type of expression, can see how many times substring fits in it
 
 //                int intervals = max / Integer.valueOf(substring)
@@ -86,6 +88,17 @@ public class CronPart {
     private void buildValues(StringBuilder stringBuilder, int... values){
         for (int value : values){
             stringBuilder.append(value).append(" ");
+        }
+    }
+
+    private void buildInterval(String cronPart, int indexStar, StringBuilder stringBuilder){
+        String substring = cronPart.substring(indexStar+2);
+        int interval = Integer.parseInt(substring);
+        int amount = type.getMax() /interval;
+
+        for (int i = 0; i <= amount; i++){
+            int appendedCronValue = interval * i;
+            stringBuilder.append(appendedCronValue).append(" ");
         }
     }
 }
