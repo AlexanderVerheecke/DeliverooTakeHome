@@ -36,7 +36,11 @@ public class Cron {
 
 // have a cron class
 // have a method that will parse the cron expression
-
+// need methods to parse the following:
+// if starts with "*" meaning intervals up to total (say minutes which is 60 */15 would do intervals of how many times 15 can fit into 60 i.e 5 [0,15.30.45,60]
+//  if standalone *, this means all the values that the expression can take, so month has 12, so 1,2,3,4,5,6 ..., 12
+// if expression has "," dispaly only those indicated e.g 1,15 would express 1 15
+// if has "-", return the values between, so 1-5 rturns 1,2,3,4,5
 
 // for the input argumetn:
 //  */15 0 1,15 * 1-5 /usr/bin/find
