@@ -24,4 +24,9 @@ public class CronTest {
         Cron cron = Cron.fromString("* * * * * /usr/bin/find");
     }
 
+    @Test
+    void expandDashes(){
+        Cron cron = Cron.fromString("1-5 0-5 1-20 1-2 1-2 /usr/bin/find"); // -
+    }
+
 }

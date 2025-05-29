@@ -1,6 +1,5 @@
 package org.example;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
@@ -14,14 +13,27 @@ public class CronPart {
         this.type = type;
 
         parseStars(text, type);
+        parseDash(text, type);
+    }
+
+    private void parseDash(String cronPart, CronPartType type){
+        StringBuilder stringBuilder = new StringBuilder();
+        if (cronPart.contains("-")){
+            int dashIndex = cronPart.indexOf("-");
+            int before =Integer.parseInt(cronPart.substring(0, dashIndex));
+            int after = Integer.parseInt(cronPart.substring(dashIndex+1));
+
+            buildRange(before, after, stringBuilder);
+            System.out.println(type.toString()+ " : "+stringBuilder);
+        }
     }
 
     private void parseStars(String cronPart, CronPartType type){
         StringBuilder stringBuilder = new StringBuilder();
         if (cronPart.startsWith("*")){
             if (cronPart.length() ==1){
-                buildRange(type, stringBuilder);
-                System.out.println(stringBuilder);
+                buildRange(type.getMin(), type.getMax(), stringBuilder);
+                System.out.println(type.toString()+ " : "+stringBuilder);
 
                 // here would iterate through all possible value but need to indicate what the type is [Minutes, Hours, Day, ...]
                 return;
@@ -42,8 +54,8 @@ public class CronPart {
         }
     }
 
-    private void buildRange(CronPartType type, StringBuilder stringBuilder){
-        for(int min = type.getMin(); min < type.getMax(); min++){
+    private void buildRange(int typeMin, int typeMax, StringBuilder stringBuilder){
+        for(int min = typeMin; min <= typeMax; min++){
             stringBuilder.append(String.valueOf(min)).append(" ");
         }
     }
