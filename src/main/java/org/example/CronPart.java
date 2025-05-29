@@ -14,6 +14,7 @@ public class CronPart {
 
         parseStars(text, type);
         parseDash(text, type);
+        parseComma(text, type);
     }
 
     private void parseDash(String cronPart, CronPartType type){
@@ -24,6 +25,18 @@ public class CronPart {
             int after = Integer.parseInt(cronPart.substring(dashIndex+1));
 
             buildRange(before, after, stringBuilder);
+            System.out.println(type.toString()+ " : "+stringBuilder);
+        }
+    }
+
+    private void parseComma(String cronPart, CronPartType type){
+        StringBuilder stringBuilder = new StringBuilder();
+        if (cronPart.contains(",")){
+            int dashIndex = cronPart.indexOf(",");
+            int first =Integer.parseInt(cronPart.substring(0, dashIndex));
+            int second = Integer.parseInt(cronPart.substring(dashIndex+1));
+
+            buildValues(stringBuilder, first, second);
             System.out.println(type.toString()+ " : "+stringBuilder);
         }
     }
@@ -57,6 +70,12 @@ public class CronPart {
     private void buildRange(int typeMin, int typeMax, StringBuilder stringBuilder){
         for(int min = typeMin; min <= typeMax; min++){
             stringBuilder.append(String.valueOf(min)).append(" ");
+        }
+    }
+
+    private void buildValues(StringBuilder stringBuilder, int... values){
+        for (int value : values){
+            stringBuilder.append(value).append(" ");
         }
     }
 }
