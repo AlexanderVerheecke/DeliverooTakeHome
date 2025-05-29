@@ -7,10 +7,10 @@ import lombok.Getter;
 @Getter
 public enum CronPartType {
     MINUTES(0,59),
-    HOURS(1,24),
+    HOURS(0,23),
     DAYOFMONTH(1,31),
     MONTHS(1,12),
-    DAYOFWEEK(1,7);
+    DAYOFWEEK(0,6);
 
     private int min;
     private int max;

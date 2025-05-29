@@ -9,14 +9,13 @@ public class CronPart {
     private CronPartType type;
     private String expandedText;
 
-
-
     public CronPart(String text, CronPartType type) throws IllegalArgumentException{
         this.text = text;
         this.type = type;
         this.expandedText = parseText(type, text);
 
     }
+
     public String parseText(CronPartType type, String text){
         StringBuilder result = new StringBuilder();
         result.append(parseStars(text, type));
