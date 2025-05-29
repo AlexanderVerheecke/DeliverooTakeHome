@@ -17,6 +17,10 @@ public class Cron {
     public static Cron fromString(String arg) {
         String[] cronMembers = arg.split(" ");
 
+        if (cronMembers.length != 6) {
+            throw new IllegalArgumentException("Expected 6 arguments but got " + cronMembers.length+  ": input : " + arg);
+        }
+
         return Cron.builder()
                 .minutes(cronMembers[0])
                 .hours(cronMembers[1])
