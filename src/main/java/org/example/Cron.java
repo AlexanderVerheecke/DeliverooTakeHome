@@ -31,14 +31,46 @@ public class Cron {
                 .build();
     }
 
+    private String parseStars(String cronPart){
+        StringBuilder stringBuilder = new StringBuilder();
+        if (cronPart.startsWith("*")){
+            if (cronPart.length() ==1){
+                // here would iterate through all possible value but need to indicate what the type is [Minutes, Hours, Day, ...]
+
+                return "Correct part";
+            }
+
+            int indexStar = cronPart.indexOf("*");
+
+            if (String.valueOf(cronPart.charAt(indexStar + 1)).equals("/")){
+                String substring = cronPart.substring(indexStar+2);
+                // using type of expression, can see how many times substring fits in it
+
+//                int intervals = max / Integer.valueOf(substring)
+
+//                for(int i = 0; i < intervals; i++){
+//                     add to string the value from interval
+//                }
+
+
+
+            }
+
+
+        }
+        return "exploded string";
+
+    }
+
+
 }
 
 
 // have a cron class
 // have a method that will parse the cron expression
 // need methods to parse the following:
-// if starts with "*" meaning intervals up to total (say minutes which is 60 */15 would do intervals of how many times 15 can fit into 60 i.e 5 [0,15.30.45,60]
-//  if standalone *, this means all the values that the expression can take, so month has 12, so 1,2,3,4,5,6 ..., 12
+// if  *, this means all the values that the expression can take, so month has 12, so 1,2,3,4,5,6 ..., 12
+// if  "/" meaning intervals up to total (say minutes which is 60 */15 would do intervals of how many times 15 can fit into 60 i.e 5 [0,15.30.45,60]
 // if expression has "," dispaly only those indicated e.g 1,15 would express 1 15
 // if has "-", return the values between, so 1-5 rturns 1,2,3,4,5
 
