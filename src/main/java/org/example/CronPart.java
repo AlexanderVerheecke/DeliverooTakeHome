@@ -7,27 +7,37 @@ public class CronPart {
 
     private String text;
     private CronPartType type;
+    private String expandedText;
+
+
 
     public CronPart(String text, CronPartType type) throws IllegalArgumentException{
         this.text = text;
         this.type = type;
+        this.expandedText = parseText(type, text);
 
-        parseStars(text, type);
-        parseDash(text, type);
-        parseComma(text, type);
-        parseInteger(text, type);
+    }
+    public String parseText(CronPartType type, String text){
+        StringBuilder result = new StringBuilder();
+        result.append(parseStars(text, type));
+        result.append(parseDash(text));
+        result.append(parseComma(text));
+        result.append(parseInteger(text));
+
+        return result.toString().trim();
     }
 
-    private void parseInteger(String cronPart, CronPartType type){
+    private String parseInteger(String cronPart){
         StringBuilder stringBuilder = new StringBuilder();
 
         if (!cronPart.contains("-") && !cronPart.contains("*") && !cronPart.contains("/") && !cronPart.contains(",")){
             stringBuilder.append(cronPart).append(" ");
             System.out.println(type.toString()+ " : "+cronPart);
         }
+        return stringBuilder.toString();
     }
 
-    private void parseDash(String cronPart, CronPartType type){
+    private String parseDash(String cronPart){
         StringBuilder stringBuilder = new StringBuilder();
         if (cronPart.contains("-")){
             int dashIndex = cronPart.indexOf("-");
@@ -35,11 +45,11 @@ public class CronPart {
             int after = Integer.parseInt(cronPart.substring(dashIndex+1));
 
             buildRange(before, after, stringBuilder);
-            System.out.println(type.toString()+ " : "+stringBuilder);
         }
+        return stringBuilder.toString();
     }
 
-    private void parseComma(String cronPart, CronPartType type){
+    private String parseComma(String cronPart){
         StringBuilder stringBuilder = new StringBuilder();
         if (cronPart.contains(",")){
             int dashIndex = cronPart.indexOf(",");
@@ -47,41 +57,27 @@ public class CronPart {
             int second = Integer.parseInt(cronPart.substring(dashIndex+1));
 
             buildValues(stringBuilder, first, second);
-            System.out.println(type.toString()+ " : "+stringBuilder);
         }
+        return  stringBuilder.toString();
     }
 
-    private void parseStars(String cronPart, CronPartType type){
+    private String parseStars(String cronPart, CronPartType type){
         StringBuilder stringBuilder = new StringBuilder();
         if (cronPart.startsWith("*")){
             if (cronPart.length() == 1){
                 buildRange(type.getMin(), type.getMax(), stringBuilder);
-                System.out.println(type.toString()+ " : "+stringBuilder);
+            } else {int indexStar = cronPart.indexOf("*");
 
-                // here would iterate through all possible value but need to indicate what the type is [Minutes, Hours, Day, ...]
-                return;
-            }
-
-            int indexStar = cronPart.indexOf("*");
-
-            if (String.valueOf(cronPart.charAt(indexStar + 1)).equals("/")){
-                buildInterval(cronPart, indexStar, stringBuilder);
-                System.out.println(type.toString()+ " : "+stringBuilder);
-//                String substring = cronPart.substring(indexStar+2);
-                // using type of expression, can see how many times substring fits in it
-
-//                int intervals = max / Integer.valueOf(substring)
-
-//                for(int i = 0; i < intervals; i++){
-//                     add to string the value from interval
-//                }
+                if (String.valueOf(cronPart.charAt(indexStar + 1)).equals("/")){
+                    buildInterval(cronPart, indexStar, stringBuilder);}
             }
         }
+        return stringBuilder.toString();
     }
 
     private void buildRange(int typeMin, int typeMax, StringBuilder stringBuilder){
         for(int min = typeMin; min <= typeMax; min++){
-            stringBuilder.append(String.valueOf(min)).append(" ");
+            stringBuilder.append(min).append(" ");
         }
     }
 

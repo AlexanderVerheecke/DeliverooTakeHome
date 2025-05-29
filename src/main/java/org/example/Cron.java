@@ -1,10 +1,8 @@
 package org.example;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
 public class Cron {
     private CronPart minutes;
     private CronPart hours;
@@ -14,24 +12,34 @@ public class Cron {
 
     private String command;
 
-    public static Cron fromString(String arg) {
+    public Cron (String arg) throws  IllegalArgumentException{
         String[] cronMembers = arg.split(" ");
 
         if (cronMembers.length != 6) {
-            throw new IllegalArgumentException("Expected 6 arguments but got " + cronMembers.length + ": input : " + arg);
+            throw new IllegalArgumentException("Expected 6 arguments but got " + cronMembers.length + "; input: " + arg);
         }
 
-        return Cron.builder()
-                .minutes(new CronPart(cronMembers[0], CronPartType.MINUTES))
-                .hours(new CronPart(cronMembers[1], CronPartType.HOURS))
-                .dayOfMonth( new CronPart(cronMembers[2], CronPartType.DAYOFMONTH))
-                .months(new CronPart(cronMembers[3], CronPartType.MONTHS))
-                .dayOfWeek(new CronPart(cronMembers[4], CronPartType.DAYOFWEEK))
-                .command(cronMembers[5])
-                .build();
+        minutes = (new CronPart(cronMembers[0], CronPartType.MINUTES));
+        hours = (new CronPart(cronMembers[1], CronPartType.HOURS));
+        dayOfMonth = ( new CronPart(cronMembers[2], CronPartType.DAYOFMONTH));
+        months = (new CronPart(cronMembers[3], CronPartType.MONTHS));
+        dayOfWeek = (new CronPart(cronMembers[4], CronPartType.DAYOFWEEK));
+        command = (cronMembers[5]);
     }
 
+    public String printExression() {
+        StringBuilder result = new StringBuilder();
 
+        result.append(String.format("%-14s%s\n", "minute", minutes.getExpandedText()));
+        result.append(String.format("%-14s%s\n", "hours", hours.getExpandedText()));
+        result.append(String.format("%-14s%s\n", "day of month", dayOfMonth.getExpandedText()));
+        result.append(String.format("%-14s%s\n", "month", months.getExpandedText()));
+        result.append(String.format("%-14s%s\n", "day of week", dayOfWeek.getExpandedText()));
+        result.append(String.format("%-14s%s", "command", command));
+
+        System.out.println(result);
+        return result.toString();
+    }
 }
 
 
