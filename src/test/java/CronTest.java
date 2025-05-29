@@ -19,4 +19,9 @@ public class CronTest {
         });
     }
 
+    @Test
+    void expandsStars(){
+        Cron cron = Cron.fromString("* * * * * /usr/bin/find");
+    }
+
 }

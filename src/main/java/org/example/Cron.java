@@ -6,11 +6,11 @@ import lombok.Data;
 @Data
 @Builder
 public class Cron {
-    private String minutes;
-    private String hours;
-    private String dayOfMonth;
-    private String month;
-    private String dayOfWeek;
+    private CronPart minutes;
+    private CronPart hours;
+    private CronPart dayOfMonth;
+    private CronPart months;
+    private CronPart dayOfWeek;
 
     private String command;
 
@@ -18,48 +18,17 @@ public class Cron {
         String[] cronMembers = arg.split(" ");
 
         if (cronMembers.length != 6) {
-            throw new IllegalArgumentException("Expected 6 arguments but got " + cronMembers.length+  ": input : " + arg);
+            throw new IllegalArgumentException("Expected 6 arguments but got " + cronMembers.length + ": input : " + arg);
         }
 
         return Cron.builder()
-                .minutes(cronMembers[0])
-                .hours(cronMembers[1])
-                .dayOfMonth(cronMembers[2])
-                .month(cronMembers[3])
-                .dayOfWeek(cronMembers[4])
+                .minutes(new CronPart(cronMembers[0], CronPartType.MINUTES))
+                .hours(new CronPart(cronMembers[1], CronPartType.HOURS))
+                .dayOfMonth( new CronPart(cronMembers[2], CronPartType.DAYOFMONTH))
+                .months(new CronPart(cronMembers[3], CronPartType.MONTHS))
+                .dayOfWeek(new CronPart(cronMembers[4], CronPartType.DAYOFWEEK))
                 .command(cronMembers[5])
                 .build();
-    }
-
-    private String parseStars(String cronPart){
-        StringBuilder stringBuilder = new StringBuilder();
-        if (cronPart.startsWith("*")){
-            if (cronPart.length() ==1){
-                // here would iterate through all possible value but need to indicate what the type is [Minutes, Hours, Day, ...]
-
-                return "Correct part";
-            }
-
-            int indexStar = cronPart.indexOf("*");
-
-            if (String.valueOf(cronPart.charAt(indexStar + 1)).equals("/")){
-                String substring = cronPart.substring(indexStar+2);
-                // using type of expression, can see how many times substring fits in it
-
-//                int intervals = max / Integer.valueOf(substring)
-
-//                for(int i = 0; i < intervals; i++){
-//                     add to string the value from interval
-//                }
-
-
-
-            }
-
-
-        }
-        return "exploded string";
-
     }
 
 
