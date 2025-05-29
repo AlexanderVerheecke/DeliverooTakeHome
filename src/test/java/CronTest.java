@@ -33,4 +33,9 @@ public class CronTest {
     void expandCommas(){
         Cron cron = Cron.fromString("1,5 0,5 1,20 1,2 1,2 /usr/bin/find"); // -
     }
+
+    @Test
+    void expandInteger(){
+        Cron cron = Cron.fromString("1 0 1 3 4 /usr/bin/find"); // -
+    }
 }

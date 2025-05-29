@@ -15,6 +15,16 @@ public class CronPart {
         parseStars(text, type);
         parseDash(text, type);
         parseComma(text, type);
+        parseInteger(text, type);
+    }
+
+    private void parseInteger(String cronPart, CronPartType type){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (!cronPart.contains("-") && !cronPart.contains("*") && !cronPart.contains("/") && !cronPart.contains(",")){
+            stringBuilder.append(cronPart).append(" ");
+            System.out.println(type.toString()+ " : "+cronPart);
+        }
     }
 
     private void parseDash(String cronPart, CronPartType type){
