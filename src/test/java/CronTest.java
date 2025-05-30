@@ -6,7 +6,6 @@ public class CronTest {
 
     @Test
     void invalidCronThrowsException() {
-
         IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
             // has 7 elements, test causing thrown exception
             Cron cron = new Cron("test */15 0 1,15 * 1-5 /usr/bin/find");
@@ -29,15 +28,33 @@ public class CronTest {
 
         String expectedOutput = String.join("\n",
                 "minute        0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59",
-                "hours         1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24",
+                "hours         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23",
                 "day of month  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31",
                 "month         1 2 3 4 5 6 7 8 9 10 11 12",
-                "day of week   1 2 3 4 5 6 7",
+                "day of week   0 1 2 3 4 5 6",
                 "command       /usr/bin/find"
         );
 
         Assertions.assertEquals(expectedOutput, result);
     }
+
+    @Test
+    void expandIntervals(){
+        Cron cron = new Cron("*/10 */5 */4 */6 */3 /usr/bin/find"); // -
+        String result = cron.printExression();
+
+        String expectedOutput = String.join("\n",
+                "minute        0 10 20 30 40 50",
+                "hours         0 5 10 15 20",
+                "day of month  4 8 12 16 20 24 28",
+                "month         6 12",
+                "day of week   0 3 6",
+                "command       /usr/bin/find"
+        );
+
+        Assertions.assertEquals(expectedOutput, result);
+    }
+
 
     @Test
     void expandDashes(){
@@ -74,7 +91,7 @@ public class CronTest {
     }
 
     @Test
-    void expandInteger(){
+    void parseInteger(){
         Cron cron = new Cron("1 0 1 3 4 /usr/bin/find"); // -
         String result = cron.printExression();
 
@@ -92,13 +109,13 @@ public class CronTest {
 
     @Test
     void parseValidCron() {
-        Cron cron = new Cron("*/15 0 1,15 * 1-5 /usr/bin/find");
+        Cron cron = new Cron("*/15 0 1,5-10 * 1-5 /usr/bin/find");
         String result = cron.printExression();
 
         String expectedOutput = String.join("\n",
                 "minute        0 15 30 45",
                 "hours         0",
-                "day of month  1 15",
+                "day of month  1 5 6 7 8 9 10",
                 "month         1 2 3 4 5 6 7 8 9 10 11 12",
                 "day of week   1 2 3 4 5",
                 "command       /usr/bin/find"
@@ -108,3 +125,7 @@ public class CronTest {
         Assertions.assertEquals(expectedOutput, result);
     }
 }
+
+// things ot check
+// "abc" so non numeral
+// value valid e.g. can't have 13 for months, values to be withing min and max of enum
