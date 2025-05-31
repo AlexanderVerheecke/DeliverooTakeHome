@@ -86,13 +86,9 @@ public class CronPart {
     private void buildInterval(String cronPart, int indexStar, StringBuilder stringBuilder){
         String substring = cronPart.substring(indexStar+2);
         int interval = Integer.parseInt(substring);
-        int amount = type.getMax() /interval;
 
-        int start = (type.getMin() != 0) ? 1 : 0;
-
-        for (int i = start; i <= amount; i++){
-            int appendedCronValue = interval * i;
-            stringBuilder.append(appendedCronValue).append(" ");
+        for (int i = type.getMin(); i <= type.getMax();  i += interval){
+            stringBuilder.append(i).append(" ");
         }
     }
 }

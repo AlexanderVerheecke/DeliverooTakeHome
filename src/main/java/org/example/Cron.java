@@ -31,7 +31,7 @@ public class Cron {
         StringBuilder result = new StringBuilder();
 
         result.append(String.format("%-14s%s\n", "minute", minutes.getExpandedText()));
-        result.append(String.format("%-14s%s\n", "hours", hours.getExpandedText()));
+        result.append(String.format("%-14s%s\n", "hour", hours.getExpandedText()));
         result.append(String.format("%-14s%s\n", "day of month", dayOfMonth.getExpandedText()));
         result.append(String.format("%-14s%s\n", "month", months.getExpandedText()));
         result.append(String.format("%-14s%s\n", "day of week", dayOfWeek.getExpandedText()));

@@ -28,7 +28,7 @@ public class CronTest {
 
         String expectedOutput = String.join("\n",
                 "minute        0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59",
-                "hours         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23",
+                "hour          0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23",
                 "day of month  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31",
                 "month         1 2 3 4 5 6 7 8 9 10 11 12",
                 "day of week   0 1 2 3 4 5 6",
@@ -45,9 +45,9 @@ public class CronTest {
 
         String expectedOutput = String.join("\n",
                 "minute        0 10 20 30 40 50",
-                "hours         0 5 10 15 20",
-                "day of month  4 8 12 16 20 24 28",
-                "month         6 12",
+                "hour          0 5 10 15 20",
+                "day of month  1 5 9 13 17 21 25 29",
+                "month         1 7",
                 "day of week   0 3 6",
                 "command       /usr/bin/find"
         );
@@ -63,7 +63,7 @@ public class CronTest {
 
         String expectedOutput = String.join("\n",
                "minute        1 2 3 4 5",
-                "hours         0 1 2 3 4 5",
+                "hour          0 1 2 3 4 5",
                 "day of month  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20",
                 "month         1 2",
                 "day of week   1 2",
@@ -80,7 +80,7 @@ public class CronTest {
 
         String expectedOutput = String.join("\n",
                 "minute        1 5",
-               "hours         0 5",
+               "hour          0 5",
                 "day of month  1 20",
                 "month         1 2",
                 "day of week   1 2",
@@ -97,7 +97,7 @@ public class CronTest {
 
         String expectedOutput = String.join("\n",
              "minute        1",
-                "hours         0",
+                "hour          0",
                 "day of month  1",
                 "month         3",
                 "day of week   4",
@@ -114,7 +114,7 @@ public class CronTest {
 
         String expectedOutput = String.join("\n",
                 "minute        0 15 30 45",
-                "hours         0",
+                "hour          0",
                 "day of month  1 5 6 7 8 9 10",
                 "month         1 2 3 4 5 6 7 8 9 10 11 12",
                 "day of week   1 2 3 4 5",
