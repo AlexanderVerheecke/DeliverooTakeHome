@@ -1,4 +1,4 @@
-import org.example.Cron;
+import org.task.Cron;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

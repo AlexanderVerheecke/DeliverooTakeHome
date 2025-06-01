@@ -1,4 +1,4 @@
-package org.example;
+package org.task;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
